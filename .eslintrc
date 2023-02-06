@@ -1,0 +1,28 @@
+{
+	"root": true,
+
+	"extends": "@ljharb",
+
+	"rules": {
+		"id-length": 0,
+		"multiline-comment-style": 0,
+		"new-cap": [2, {
+			"capIsNewExceptions": [
+				"ArrayBufferCopyAndDetach",
+				"DetachArrayBuffer",
+				"GetIntrinsic",
+				"IsDetachedBuffer",
+				"IsResizableArrayBuffer",
+				"ToIndex",
+			],
+		}],
+	},
+
+	"overrides": [
+		{
+			"files": "test/**",
+			"rules": {
+			},
+		},
+	],
+}
