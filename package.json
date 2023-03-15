@@ -1,6 +1,6 @@
 {
 	"name": "arraybuffer.prototype.transfertofixedlength",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "ES Proposal spec-compliant shim for ArrayBuffer.prototype.transferToFixedLength",
 	"author": "Jordan Harband <ljharb@gmail.com>",
 	"funding": {
