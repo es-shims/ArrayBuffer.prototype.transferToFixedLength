@@ -4,9 +4,10 @@
 	"extends": "@ljharb",
 
 	"rules": {
-		"id-length": 0,
-		"multiline-comment-style": 0,
-		"new-cap": [2, {
+		"id-length": "off",
+		"max-params": "off",
+		"multiline-comment-style": "off",
+		"new-cap": ["error", {
 			"capIsNewExceptions": [
 				"ArrayBufferCopyAndDetach",
 				"DetachArrayBuffer",
@@ -21,7 +22,11 @@
 	"overrides": [
 		{
 			"files": "test/**",
+			"globals": {
+				"Uint8Array": false,
+			},
 			"rules": {
+				"max-lines-per-function": "off",
 			},
 		},
 	],

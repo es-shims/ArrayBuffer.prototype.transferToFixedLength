@@ -5,28 +5,27 @@ var GetIntrinsic = require('get-intrinsic');
 var min = GetIntrinsic('%Math.min%');
 var $TypeError = GetIntrinsic('%TypeError%');
 var $ArrayBuffer = GetIntrinsic('%ArrayBuffer%', true);
+var $Uint8Array = GetIntrinsic('%Uint8Array%', true);
 
 var callBound = require('call-bind/callBound');
 
 var $byteLength = callBound('%ArrayBuffer.prototype.byteLength%', true)
 	|| function byteLength(ab) { return ab.byteLength; }; // in node < 0.11, byteLength is an own nonconfigurable property
 var $maxByteLength = callBound('%ArrayBuffer.prototype.maxByteLength%', true);
-var copy = function copyAB(src, start, end) {
-	/* globals Uint8Array: false */
-	var that = new Uint8Array(src);
+var copyInto = function copyAB(dest, src, start, end) {
+	var that = new $Uint8Array(src);
 	if (typeof end === 'undefined') {
 		end = that.length; // eslint-disable-line no-param-reassign
 	}
-	var result = new ArrayBuffer(end - start);
-	var resultArray = new Uint8Array(result);
+	var resultArray = new $Uint8Array(dest);
 	for (var i = 0; i < resultArray.length; i++) {
 		resultArray[i] = that[i + start];
 	}
-	return result;
+	return dest;
 };
 var $abSlice = callBound('%ArrayBuffer.prototype.slice%', true)
 	|| function slice(ab, a, b) { // in node < 0.11, slice is an own nonconfigurable property
-		return ab.slice ? ab.slice(a, b) : copy(ab, a, b); // node 0.8 lacks `slice`
+		return ab.slice ? ab.slice(a, b) : copyInto(new $ArrayBuffer(b - a), ab, a, b); // node 0.8 lacks `slice`
 	};
 
 var DetachArrayBuffer = require('es-abstract/2022/DetachArrayBuffer');
@@ -74,12 +73,15 @@ module.exports = function ArrayBufferCopyAndDetach(arrayBuffer, newLength, prese
 
 	// 9. Let newBuffer be ? AllocateArrayBuffer(%ArrayBuffer%, newByteLength, newMaxByteLength).
 	var newBuffer = newMaxByteLength === 'empty' ? new $ArrayBuffer(newByteLength) : new $ArrayBuffer(newByteLength, { maxByteLength: newMaxByteLength });
-
 	if (typeof abByteLength !== 'number') {
 		abByteLength = $byteLength(arrayBuffer);
 	}
 	var copyLength = min(newByteLength, abByteLength); // step 10
-	newBuffer = $abSlice(arrayBuffer, 0, copyLength); // ??
+	if (newByteLength === copyLength) {
+		newBuffer = $abSlice(arrayBuffer, 0, copyLength); // ??
+	} else {
+		copyInto(newBuffer, arrayBuffer, 0, copyLength);
+	}
 	/*
 	11. Let fromBlock be arrayBuffer.[[ArrayBufferData]].
 	12. Let toBlock be newBuffer.[[ArrayBufferData]].
