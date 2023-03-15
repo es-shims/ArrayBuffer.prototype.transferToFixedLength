@@ -6,7 +6,7 @@ var test = require('tape');
 var hasStrictMode = require('has-strict-mode')();
 var runTests = require('./tests');
 
-test('as a function', function (t) {
+test('implementation', function (t) {
 	t.test('ArrayBuffer support', { skip: typeof ArrayBuffer === 'undefined' }, function (st) {
 		st.test('bad array/this value', { skip: !hasStrictMode }, function (s2t) {
 		/* eslint no-useless-call: 0 */

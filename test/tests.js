@@ -1,6 +1,7 @@
 'use strict';
 
 var inspect = require('object-inspect');
+var DetachArrayBuffer = require('es-abstract/2022/DetachArrayBuffer');
 var IsDetachedBuffer = require('es-abstract/2022/IsDetachedBuffer');
 var callBound = require('call-bind/callBound');
 
@@ -80,6 +81,210 @@ module.exports = function runTests(transferToFixedLength, t) {
 
 			s2t.end();
 		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-fixed-to-same.js', function (s2t) {
+			var source = new ArrayBuffer(4);
+
+			var sourceArray = new Uint8Array(source);
+			sourceArray[0] = 1;
+			sourceArray[1] = 2;
+			sourceArray[2] = 3;
+			sourceArray[3] = 4;
+
+			var dest = transferToFixedLength(source);
+
+			s2t.equal(source.byteLength, 0, 'source.byteLength');
+			s2t.ok(IsDetachedBuffer(source), 'source is detached');
+
+			s2t.equal(dest.resizable, false, 'dest.resizable', { skip: !('resizable' in ArrayBuffer.prototype) });
+			s2t.equal(dest.byteLength, 4, 'dest.byteLength');
+			s2t.equal(dest.maxByteLength, 4, 'dest.maxByteLength', { skip: !('maxByteLength' in ArrayBuffer.prototype) });
+
+			var destArray = new Uint8Array(dest);
+
+			s2t.equal(destArray[0], 1, 'destArray[0]');
+			s2t.equal(destArray[1], 2, 'destArray[1]');
+			s2t.equal(destArray[2], 3, 'destArray[2]');
+			s2t.equal(destArray[3], 4, 'destArray[3]');
+
+			s2t.end();
+		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-fixed-to-smaller.js', function (s2t) {
+			var source = new ArrayBuffer(4);
+
+			var sourceArray = new Uint8Array(source);
+			sourceArray[0] = 1;
+			sourceArray[1] = 2;
+			sourceArray[2] = 3;
+			sourceArray[3] = 4;
+
+			var dest = transferToFixedLength(source, 3);
+
+			s2t.equal(source.byteLength, 0, 'source.byteLength');
+			s2t.ok(IsDetachedBuffer(source), 'source is detached');
+
+			s2t.equal(dest.resizable, false, 'dest.resizable', { skip: !('resizable' in ArrayBuffer.prototype) });
+			s2t.equal(dest.byteLength, 3, 'dest.byteLength');
+			s2t.equal(dest.maxByteLength, 3, 'dest.maxByteLength', { skip: !('maxByteLength' in ArrayBuffer.prototype) });
+
+			var destArray = new Uint8Array(dest);
+
+			s2t.equal(destArray[0], 1, 'destArray[0]');
+			s2t.equal(destArray[1], 2, 'destArray[1]');
+			s2t.equal(destArray[2], 3, 'destArray[2]');
+
+			s2t.end();
+		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-fixed-to-zero.js', function (s2t) {
+			var source = new ArrayBuffer(4);
+
+			var sourceArray = new Uint8Array(source);
+			sourceArray[0] = 1;
+			sourceArray[1] = 2;
+			sourceArray[2] = 3;
+			sourceArray[3] = 4;
+
+			var dest = transferToFixedLength(source, 0);
+
+			s2t.equal(source.byteLength, 0, 'source.byteLength');
+			s2t.ok(IsDetachedBuffer(source), 'source is detached');
+
+			s2t.equal(dest.resizable, false, 'dest.resizable', { skip: !('resizable' in ArrayBuffer.prototype) });
+			s2t.equal(dest.byteLength, 0, 'dest.byteLength');
+			s2t.equal(dest.maxByteLength, 0, 'dest.maxByteLength', { skip: !('maxByteLength' in ArrayBuffer.prototype) });
+
+			s2t.end();
+		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-resizable-to-larger.js', { skip: !('resizable' in ArrayBuffer.prototype) }, function (s2t) {
+			var source = new ArrayBuffer(4, { maxByteLength: 8 });
+
+			var sourceArray = new Uint8Array(source);
+			sourceArray[0] = 1;
+			sourceArray[1] = 2;
+			sourceArray[2] = 3;
+			sourceArray[3] = 4;
+
+			var dest = source.transferToFixedLength(5);
+
+			s2t.equal(source.byteLength, 0, 'source.byteLength');
+			s2t.ok(IsDetachedBuffer(source), 'source is detached');
+
+			s2t.equal(dest.resizable, false, 'dest.resizable');
+			s2t.equal(dest.byteLength, 5, 'dest.byteLength');
+			s2t.equal(dest.maxByteLength, 5, 'dest.maxByteLength');
+
+			var destArray = new Uint8Array(dest);
+
+			s2t.equal(destArray[0], 1, 'destArray[0]');
+			s2t.equal(destArray[1], 2, 'destArray[1]');
+			s2t.equal(destArray[2], 3, 'destArray[2]');
+			s2t.equal(destArray[3], 4, 'destArray[3]');
+			s2t.equal(destArray[4], 0, 'destArray[4]');
+
+			s2t.end();
+		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-resizable-to-same.js', { skip: !('resizable' in ArrayBuffer.prototype) }, function (s2t) {
+			var source = new ArrayBuffer(4, { maxByteLength: 8 });
+
+			var sourceArray = new Uint8Array(source);
+			sourceArray[0] = 1;
+			sourceArray[1] = 2;
+			sourceArray[2] = 3;
+			sourceArray[3] = 4;
+
+			var dest = transferToFixedLength(source);
+
+			s2t.equal(source.byteLength, 0, 'source.byteLength');
+			s2t.ok(IsDetachedBuffer(source), 'source is detached');
+
+			s2t.equal(dest.resizable, false, 'dest.resizable');
+			s2t.equal(dest.byteLength, 4, 'dest.byteLength');
+			s2t.equal(dest.maxByteLength, 4, 'dest.maxByteLength');
+
+			var destArray = new Uint8Array(dest);
+
+			s2t.equal(destArray[0], 1, 'destArray[0]');
+			s2t.equal(destArray[1], 2, 'destArray[1]');
+			s2t.equal(destArray[2], 3, 'destArray[2]');
+			s2t.equal(destArray[3], 4, 'destArray[3]');
+
+			return s2t.end();
+		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-resizable-to-smaller.js', { skip: !('resizable' in ArrayBuffer.prototype) }, function (s2t) {
+			var source = new ArrayBuffer(4, { maxByteLength: 8 });
+
+			var sourceArray = new Uint8Array(source);
+			sourceArray[0] = 1;
+			sourceArray[1] = 2;
+			sourceArray[2] = 3;
+			sourceArray[3] = 4;
+
+			var dest = transferToFixedLength(source, 3);
+
+			s2t.equal(source.byteLength, 0, 'source.byteLength');
+			s2t.ok(IsDetachedBuffer(source), 'source is detached');
+
+			s2t.equal(dest.resizable, false, 'dest.resizable');
+			s2t.equal(dest.byteLength, 3, 'dest.byteLength');
+			s2t.equal(dest.maxByteLength, 3, 'dest.maxByteLength');
+
+			var destArray = new Uint8Array(dest);
+
+			s2t.equal(destArray[0], 1, 'destArray[0]');
+			s2t.equal(destArray[1], 2, 'destArray[1]');
+			s2t.equal(destArray[2], 3, 'destArray[2]');
+
+			s2t.end();
+		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-resizable-to-zero.js', { skip: !('resizable' in ArrayBuffer.prototype) }, function (s2t) {
+			var source = new ArrayBuffer(4, { maxByteLength: 8 });
+
+			var sourceArray = new Uint8Array(source);
+			sourceArray[0] = 1;
+			sourceArray[1] = 2;
+			sourceArray[2] = 3;
+			sourceArray[3] = 4;
+
+			var dest = transferToFixedLength(source, 0);
+
+			s2t.equal(source.byteLength, 0, 'source.byteLength');
+			s2t.ok(IsDetachedBuffer(source), 'source is detached');
+
+			s2t.equal(dest.resizable, false, 'dest.resizable');
+			s2t.equal(dest.byteLength, 0, 'dest.byteLength');
+			s2t.equal(dest.maxByteLength, 0, 'dest.maxByteLength');
+
+			s2t.end();
+		});
+
+		st.test('262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/new-length-excessive.js', function (s2t) {
+			var zab = new ArrayBuffer(0);
+
+			s2t['throws'](
+				function () {
+					// Math.pow(2, 53) = 9007199254740992
+					transferToFixedLength(zab, 9007199254740992);
+				},
+				RangeError,
+				'too-large length throws'
+			);
+
+			s2t.end();
+		});
+
+		var dab = new ArrayBuffer(1);
+		DetachArrayBuffer(dab);
+		st['throws'](
+			function () { transferToFixedLength(dab); },
+			TypeError,
+			inspect(dab) + ' is detached'
+		);
 
 		return st.end();
 	});
