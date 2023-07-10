@@ -3,12 +3,11 @@
 var inspect = require('object-inspect');
 var DetachArrayBuffer = require('es-abstract/2022/DetachArrayBuffer');
 var IsDetachedBuffer = require('es-abstract/2022/IsDetachedBuffer');
-var callBound = require('call-bind/callBound');
 
 var forEach = require('for-each');
 var v = require('es-value-fixtures');
 
-var byteLength = callBound('ArrayBuffer.prototype.byteLength', true);
+var byteLength = require('array-buffer-byte-length');
 
 module.exports = function runTests(transferToFixedLength, t) {
 	forEach(v.primitives.concat(v.objects), function (nonAB) {

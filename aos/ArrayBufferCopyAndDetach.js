@@ -9,9 +9,8 @@ var $Uint8Array = GetIntrinsic('%Uint8Array%', true);
 
 var callBound = require('call-bind/callBound');
 
-var $byteLength = callBound('%ArrayBuffer.prototype.byteLength%', true)
-	|| function byteLength(ab) { return ab.byteLength; }; // in node < 0.11, byteLength is an own nonconfigurable property
 var $maxByteLength = callBound('%ArrayBuffer.prototype.maxByteLength%', true);
+
 var copyInto = function copyAB(dest, src, start, end) {
 	var that = new $Uint8Array(src);
 	if (typeof end === 'undefined') {
@@ -23,19 +22,17 @@ var copyInto = function copyAB(dest, src, start, end) {
 	}
 	return dest;
 };
-var $abSlice = callBound('%ArrayBuffer.prototype.slice%', true)
-	|| function slice(ab, a, b) { // in node < 0.11, slice is an own nonconfigurable property
-		return ab.slice ? ab.slice(a, b) : copyInto(new $ArrayBuffer(b - a), ab, a, b); // node 0.8 lacks `slice`
-	};
+
+var arrayBufferByteLength = require('array-buffer-byte-length');
+var arrayBufferSlice = require('arraybuffer.prototype.slice');
+var isArrayBuffer = require('is-array-buffer');
+var isSharedArrayBuffer = require('is-shared-array-buffer');
 
 var DetachArrayBuffer = require('es-abstract/2022/DetachArrayBuffer');
 var IsDetachedBuffer = require('es-abstract/2022/IsDetachedBuffer');
 var ToIndex = require('es-abstract/2022/ToIndex');
 
 var IsResizableArrayBuffer = require('./IsResizableArrayBuffer');
-
-var isArrayBuffer = require('is-array-buffer');
-var isSharedArrayBuffer = require('is-shared-array-buffer');
 
 module.exports = function ArrayBufferCopyAndDetach(arrayBuffer, newLength, preserveResizability) {
 	if (preserveResizability !== 'preserve-resizability' && preserveResizability !== 'fixed-length') {
@@ -50,7 +47,7 @@ module.exports = function ArrayBufferCopyAndDetach(arrayBuffer, newLength, prese
 
 	var newByteLength;
 	if (typeof newLength === 'undefined') { // step 3
-		newByteLength = $byteLength(arrayBuffer); // step 3.a
+		newByteLength = arrayBufferByteLength(arrayBuffer); // step 3.a
 		abByteLength = newByteLength;
 	} else { // step 4
 		newByteLength = ToIndex(newLength); // step 4.a
@@ -74,11 +71,11 @@ module.exports = function ArrayBufferCopyAndDetach(arrayBuffer, newLength, prese
 	// 9. Let newBuffer be ? AllocateArrayBuffer(%ArrayBuffer%, newByteLength, newMaxByteLength).
 	var newBuffer = newMaxByteLength === 'empty' ? new $ArrayBuffer(newByteLength) : new $ArrayBuffer(newByteLength, { maxByteLength: newMaxByteLength });
 	if (typeof abByteLength !== 'number') {
-		abByteLength = $byteLength(arrayBuffer);
+		abByteLength = arrayBufferByteLength(arrayBuffer);
 	}
 	var copyLength = min(newByteLength, abByteLength); // step 10
 	if (newByteLength === copyLength) {
-		newBuffer = $abSlice(arrayBuffer, 0, copyLength); // ??
+		newBuffer = arrayBufferSlice(arrayBuffer, 0, copyLength); // ??
 	} else {
 		copyInto(newBuffer, arrayBuffer, 0, copyLength);
 	}
