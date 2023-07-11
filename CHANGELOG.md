@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.2](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/compare/v1.0.1...v1.0.2) - 2023-07-11
+
+### Commits
+
+- [Refactor] use `array-buffer-byte-length`, `arraybuffer.prototype.slice` [`4780b72`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/4780b72e0803224154762016e93a18bd002a2663)
+- [Dev Deps] update `@es-shims/api`, `@ljharb/eslint-config`, `aud`, `tape` [`edf2398`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/edf239843a1cdf2f0d90195cbbf853253c187116)
+- [Deps] update `arraybuffer.prototype.slice` [`572d295`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/572d2956cea8ebd70afa489da7ec895d913bfc8b)
+- [Deps] update `get-intrinsic` [`c2c22c5`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/c2c22c5dfff897a425d6a1783ca2cca293530934)
+
 ## [v1.0.1](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/compare/v1.0.0...v1.0.1) - 2023-03-15
 
 ### Commits
