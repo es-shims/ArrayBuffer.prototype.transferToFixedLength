@@ -28,9 +28,9 @@ var arrayBufferSlice = require('arraybuffer.prototype.slice');
 var isArrayBuffer = require('is-array-buffer');
 var isSharedArrayBuffer = require('is-shared-array-buffer');
 
-var DetachArrayBuffer = require('es-abstract/2022/DetachArrayBuffer');
-var IsDetachedBuffer = require('es-abstract/2022/IsDetachedBuffer');
-var ToIndex = require('es-abstract/2022/ToIndex');
+var DetachArrayBuffer = require('es-abstract/2023/DetachArrayBuffer');
+var IsDetachedBuffer = require('es-abstract/2023/IsDetachedBuffer');
+var ToIndex = require('es-abstract/2023/ToIndex');
 
 var IsResizableArrayBuffer = require('./IsResizableArrayBuffer');
 

@@ -1,8 +1,8 @@
 'use strict';
 
 var inspect = require('object-inspect');
-var DetachArrayBuffer = require('es-abstract/2022/DetachArrayBuffer');
-var IsDetachedBuffer = require('es-abstract/2022/IsDetachedBuffer');
+var DetachArrayBuffer = require('es-abstract/2023/DetachArrayBuffer');
+var IsDetachedBuffer = require('es-abstract/2023/IsDetachedBuffer');
 
 var forEach = require('for-each');
 var v = require('es-value-fixtures');

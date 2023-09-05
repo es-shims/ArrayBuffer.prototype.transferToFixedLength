@@ -15,7 +15,7 @@ Most common usage:
 ```js
 var assert = require('assert');
 var transferToFixedLength = require('arraybuffer.prototype.transfertofixedlength');
-var IsDetachedBuffer = require('es-abstract/2022/IsDetachedBuffer');
+var IsDetachedBuffer = require('es-abstract/2023/IsDetachedBuffer');
 
 var ab = new ArrayBuffer('a');
 
