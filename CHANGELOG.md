@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.3](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/compare/v1.0.2...v1.0.3) - 2023-09-06
+
+### Commits
+
+- [Deps] update `es-abstract` [`d5debb4`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/d5debb4307e46db03436aa65bd559d452d08c96b)
+- [Dev Deps] update `tape` [`f1f2b6f`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/f1f2b6f0bc9392997fd790a716cb7897c859c08c)
+- [Fix] move `es-abstract` to runtime deps [`32d0c39`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/32d0c39142e9006527332848aa26cb478aa8c7dc)
+
 ## [v1.0.2](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/compare/v1.0.1...v1.0.2) - 2023-07-11
 
 ### Commits
