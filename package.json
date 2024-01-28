@@ -47,11 +47,11 @@
 	],
 	"dependencies": {
 		"array-buffer-byte-length": "^1.0.0",
-		"arraybuffer.prototype.slice": "^1.0.1",
-		"call-bind": "^1.0.2",
-		"define-properties": "^1.2.0",
-		"es-abstract": "^1.22.1",
-		"get-intrinsic": "^1.2.1",
+		"arraybuffer.prototype.slice": "^1.0.2",
+		"call-bind": "^1.0.5",
+		"define-properties": "^1.2.1",
+		"es-abstract": "^1.22.3",
+		"get-intrinsic": "^1.2.2",
 		"is-array-buffer": "^3.0.2",
 		"is-shared-array-buffer": "^1.0.2"
 	},
