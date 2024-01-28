@@ -22,14 +22,14 @@ module.exports = function IsResizableArrayBuffer(arrayBuffer) {
 
 	// 2. Return false.
 
-	if (isArrayBuffer(arrayBuffer)) {
+	if (isAB) {
 		try {
 			return !!$arrayBufferResizable && $arrayBufferResizable(arrayBuffer); // step 1
 		} catch (e) {
 			return false; // step 2
 		}
 	}
-	if (isSharedArrayBuffer(arrayBuffer)) {
+	if (isSAB) {
 		try {
 			return !!$sharedArrayGrowable && $sharedArrayGrowable(arrayBuffer); // step 1
 		} catch (e) {
