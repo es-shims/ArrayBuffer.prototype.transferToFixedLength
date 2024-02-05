@@ -50,7 +50,7 @@ module.exports = function runTests(transferToFixedLength, t) {
 		st.equal(IsDetachedBuffer(nbLen), false, 'new ArrayBuffer is not detached');
 
 		st.equal(byteLength(ab2), 0, 'detached original ArrayBuffer has length 0');
-		st.equal(byteLength(nbLen), 4, 'newly transferToFixedLengthred ArrayBuffer has length 4');
+		st.equal(byteLength(nbLen), 4, 'newly transferred ArrayBuffer has length 4');
 
 		st.test('test262: test/built-ins/ArrayBuffer/prototype/transferToFixedLength/from-fixed-to-larger.js', function (s2t) {
 			var source = new ArrayBuffer(4);

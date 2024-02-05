@@ -10,29 +10,20 @@ var $sharedArrayGrowable = callBound('%SharedArrayBuffer.prototype.growable%', t
 var isArrayBuffer = require('is-array-buffer');
 var isSharedArrayBuffer = require('is-shared-array-buffer');
 
-module.exports = function IsResizableArrayBuffer(arrayBuffer) {
+// https://262.ecma-international.org/15.0/#sec-isfixedlengtharraybuffer
+
+module.exports = function IsFixedLengthArrayBuffer(arrayBuffer) {
 	var isAB = isArrayBuffer(arrayBuffer);
 	var isSAB = isSharedArrayBuffer(arrayBuffer);
 	if (!isAB && !isSAB) {
 		throw new $TypeError('Assertion failed: `arrayBuffer` must be an ArrayBuffer or SharedArrayBuffer');
 	}
-	// 1. If arrayBuffer has an [[ArrayBufferMaxByteLength]] internal slot, return true.
 
-	// 2. Return false.
-
-	if (isAB) {
-		try {
-			return !!$arrayBufferResizable && $arrayBufferResizable(arrayBuffer); // step 1
-		} catch (e) {
-			return false; // step 2
-		}
+	if (isAB && $arrayBufferResizable) {
+		return !$arrayBufferResizable(arrayBuffer); // step 1
 	}
-	if (isSAB) {
-		try {
-			return !!$sharedArrayGrowable && $sharedArrayGrowable(arrayBuffer); // step 1
-		} catch (e) {
-			return false; // step 2
-		}
+	if (isSAB && $sharedArrayGrowable) {
+		return !$sharedArrayGrowable(arrayBuffer); // step 1
 	}
-	return false; // step 2
+	return true; // step 2
 };
