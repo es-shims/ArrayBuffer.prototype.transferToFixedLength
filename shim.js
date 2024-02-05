@@ -1,8 +1,6 @@
 'use strict';
 
-var GetIntrinsic = require('get-intrinsic');
-
-var $SyntaxError = GetIntrinsic('%SyntaxError%');
+var $SyntaxError = require('es-errors/syntax');
 
 var define = require('define-properties');
 

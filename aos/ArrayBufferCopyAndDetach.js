@@ -3,7 +3,7 @@
 var GetIntrinsic = require('get-intrinsic');
 
 var min = GetIntrinsic('%Math.min%');
-var $TypeError = GetIntrinsic('%TypeError%');
+var $TypeError = require('es-errors/type');
 var $ArrayBuffer = GetIntrinsic('%ArrayBuffer%', true);
 var $Uint8Array = GetIntrinsic('%Uint8Array%', true);
 
