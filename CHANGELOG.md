@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.0.4](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/compare/v1.0.3...v1.0.4) - 2024-02-05
+
+### Commits
+
+- [Refactor] `IsResizableBuffer` -&gt; `IsFixedLengthArrayBuffer`, per spec [`e6efbbb`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/e6efbbbc14f2c7688f9e6dc0d4b6d590aac8c69f)
+- [Refactor] use `es-errors`, so things that only need those do not need `get-intrinsic` [`c25050b`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/c25050bd0e009c5ab5831f460b3e6a1ac4543c25)
+- [Deps] update `arraybuffer.prototype.slice`, `call-bind`, `define-properties`, `es-abstract`, `get-intrinsic` [`14fbb8a`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/14fbb8a9e1706b76e5596ea0c8d9d454d12354f5)
+- [Deps] update `array-buffer-byte-length`, `arraybuffer.prototype.slice`, `get-intrinsic`, `is-array-buffer` [`678387a`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/678387a74e8af20162bac2c075994ca1eb7dede3)
+- [Dev Deps] update `aud`, `npmignore`, `object-inspect`, `tape` [`a669d55`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/a669d55d5afc9b74e6fb09eb6514e032b9b146fc)
+- [Refactor] `IsResizableArrayBuffer`: avoid double checking ABness [`2c52c85`](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/commit/2c52c85d4656d2346f2c030d087aa32d99ddd43c)
+
 ## [v1.0.3](https://github.com/es-shims/ArrayBuffer.prototype.transferToFixedLength/compare/v1.0.2...v1.0.3) - 2023-09-06
 
 ### Commits
