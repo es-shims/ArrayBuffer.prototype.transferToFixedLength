@@ -1,6 +1,6 @@
 'use strict';
 
-var ArrayBufferCopyAndDetach = require('./aos/ArrayBufferCopyAndDetach');
+var ArrayBufferCopyAndDetach = require('es-abstract/2024/ArrayBufferCopyAndDetach');
 
 module.exports = function transferToFixedLength() {
 	var newLength = arguments.length > 0 ? arguments[0] : void undefined;
